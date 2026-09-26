@@ -17,10 +17,10 @@ import ElementDesktopLogoSvg from "../res/img/element-desktop-logo.svg";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
 export const DEFAULTS = {
-    brand: "Element",
+    brand: "VaVsta",
     branding: {
-        logo_link_url: "https://element.io",
-        auth_header_logo_url: "themes/element/img/logos/element-logo.svg",
+        logo_link_url: "https://chat.vavsta.ru/",
+        auth_header_logo_url: "themes/element/img/logos/vavsta-logo.png",
         welcome_background_url: "themes/element/img/backgrounds/lake.jpg",
     },
     help_url: "https://element.io/help",
@@ -36,7 +36,7 @@ export const DEFAULTS = {
         preferred_domain: "meet.element.io",
     },
     element_call: {
-        brand: "Element Call",
+        brand: "VaVsta Call",
     },
 
     // @ts-ignore - we deliberately use the camelCase version here so we trigger
@@ -44,7 +44,7 @@ export const DEFAULTS = {
     // everyone's config which has the camelCase property because our default would
     // be preferred over their config.
     desktopBuilds: {
-        available: true,
+        available: false,
         logo: ElementDesktopLogoSvg,
         url: "https://element.io/get-started",
     },
