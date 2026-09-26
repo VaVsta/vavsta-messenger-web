@@ -23,7 +23,7 @@ echo "==> Бэкап текущего состояния на $HOST"
     BK=/var/backups/element-branding/\$(date +%Y%m%d-%H%M%S)
     mkdir -p \$BK
     cd '$WEBROOT'
-    cp -a index.html manifest.json vector-icons themes/element/img/logos static \$BK/ 2>/dev/null || true
+    cp -a index.html manifest.json vector-icons themes/element/img/logos themes/element/img/backgrounds static \$BK/ 2>/dev/null || true
     for b in bundles/*/init.js bundles/*/error-view.js; do
         [ -f \"\$b\" ] && cp -a --parents \$b \$BK/ || true
     done
@@ -39,9 +39,10 @@ tar -C "$ASSETS_DIR" -czf - . | "${SSH[@]}" "root@$HOST" "set -e
     cp -f /tmp/vavsta-branding/icons/*.png vector-icons/
     cp -f /tmp/vavsta-branding/opengraph.png themes/element/img/logos/opengraph.png
     cp -f /tmp/vavsta-branding/vavsta-logo.png themes/element/img/logos/vavsta-logo.png
+    cp -f /tmp/vavsta-branding/vavsta-splash.jpg themes/element/img/backgrounds/vavsta-splash.jpg
     cp -f /tmp/vavsta-branding/vavsta-manifest.json manifest.json
     cp -f /tmp/vavsta-branding/static/*.html static/
-    chown -R www-data:www-data vector-icons themes/element/img/logos static manifest.json
+    chown -R www-data:www-data vector-icons themes/element/img/logos themes/element/img/backgrounds static manifest.json
 "
 
 echo "==> Патчим index.html (title/og/иконки/noscript)"
@@ -77,9 +78,13 @@ s = re.sub(r'<noscript>.*?</noscript>',
             '<noscript>Sorry, VaVsta requires JavaScript to be enabled.</noscript>', s, flags=re.S)
 s = s.replace('<meta name=\"theme-color\" content=\"#ffffff\">',
               '<meta name=\"theme-color\" content=\"#160A30\">')
-assert s != orig, 'index.html не изменился — проверь, что это element-web'
-open(p, 'w', encoding='utf-8').write(s)
-print('    index.html: ok')
+if s == orig:
+    # уже пропатчен — идемпотентный повторный прогон, это норма
+    assert '<title>VaVsta</title>' in s, 'index.html не похож на element-web: нет ни Element, ни VaVsta'
+    print('    index.html: уже пропатан, пропускаем')
+else:
+    open(p, 'w', encoding='utf-8').write(s)
+    print('    index.html: ok')
 PY"
 
 echo "==> Патчим бандлы (логотип входа + отключаем рекламу Element Desktop)"
@@ -93,6 +98,7 @@ echo "==> Патчим бандлы (логотип входа + отключа�
             -e 's#\"themes/element/img/logos/element-logo\.svg\"#\"themes/element/img/logos/vavsta-logo.png\"#g' \
             -e 's#themes/element/img/logos/element-app-logo\.png#themes/element/img/logos/vavsta-logo.png#g' \
             -e 's#logo_link_url:\"https://element\.io\"#logo_link_url:\"https://chat.vavsta.ru/\"#g' \
+            -e 's#themes/element/img/backgrounds/lake\.jpg#themes/element/img/backgrounds/vavsta-splash.jpg#g' \
             \"\$f\"
     done
     chown -R www-data:www-data bundles

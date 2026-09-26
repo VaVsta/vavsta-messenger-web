@@ -21,7 +21,7 @@ export const DEFAULTS = {
     branding: {
         logo_link_url: "https://chat.vavsta.ru/",
         auth_header_logo_url: "themes/element/img/logos/vavsta-logo.png",
-        welcome_background_url: "themes/element/img/backgrounds/lake.jpg",
+        welcome_background_url: "themes/element/img/backgrounds/vavsta-splash.jpg",
     },
     help_url: "https://element.io/help",
     help_encryption_url: "https://element.io/help#encryption",
