@@ -1,23 +1,139 @@
 <!doctype html>
 <html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VaVsta — мобильное приложение</title>
-<style>
-	body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:#0d1226; color:#e6e9f5; margin:0; padding:0; display:flex; align-items:center; justify-content:center; min-height:100vh; }
-	.card { max-width:480px; padding:40px 24px; text-align:center; }
-	img { width:96px; height:96px; border-radius:22px; }
-	h1 { font-size:22px; margin:16px 0 8px; }
-	p  { font-size:15px; line-height:1.5; color:#aab2d0; margin:8px 0; }
-	code { background:#1c2340; color:#8ab4ff; padding:2px 8px; border-radius:6px; font-size:13px; }
-</style>
-</head>
-<body>
-	<div class="card">
-		<img src="/vavsta-icon.png" alt="VaVsta">
-		<h1>VaVsta Messenger</h1>
-		<p>Приложение продолжает развиваться. APK для Android обновляется с сервера — актуальную версию смотрите в разделе «О приложении» → «Проверить обновления».</p>
-	</div>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>VaVsta — мобильное приложение</title>
+        <style>
+            :root {
+                color-scheme: dark;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            /* атрибут hidden должен побеждать display из классов ниже */
+            [hidden] {
+                display: none !important;
+            }
+            body {
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    sans-serif;
+                background: #0d1226;
+                color: #e6e9f5;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+            .card {
+                max-width: 480px;
+                padding: 40px 24px;
+                text-align: center;
+            }
+            img {
+                width: 96px;
+                height: 96px;
+                border-radius: 22px;
+            }
+            h1 {
+                font-size: 22px;
+                margin: 16px 0 8px;
+            }
+            p {
+                font-size: 15px;
+                line-height: 1.5;
+                color: #aab2d0;
+                margin: 8px 0;
+            }
+            code {
+                background: #1c2340;
+                color: #8ab4ff;
+                padding: 2px 8px;
+                border-radius: 6px;
+                font-size: 13px;
+            }
+            .mx_DownloadButton {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin: 24px 0 4px;
+                padding: 14px 30px;
+                border-radius: 100px;
+                background: #7a56c9;
+                color: #fff;
+                font-size: 16px;
+                font-weight: 600;
+                text-decoration: none;
+            }
+            .mx_DownloadButton:active {
+                background: #5b3a9e;
+            }
+            .mx_DownloadButton svg {
+                width: 20px;
+                height: 20px;
+                fill: currentColor;
+            }
+            #apk_meta {
+                font-size: 13px;
+                color: #8b7aa8;
+            }
+            #apk_notes,
+            #apk_error {
+                font-size: 13px;
+            }
+            #apk_error {
+                color: #ffb4ab;
+            }
+            #apk_details {
+                margin-top: 16px;
+                font-size: 12px;
+                color: #8b7aa8;
+            }
+            #apk_details p {
+                margin: 0;
+                font-size: 12px;
+            }
+            #apk_sha {
+                display: block;
+                margin-top: 4px;
+                word-break: break-all;
+                text-align: left;
+            }
+            .mx_BackLink {
+                display: inline-block;
+                margin-top: 28px;
+                font-size: 14px;
+                color: #9675e8;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <img src="/vector-icons/512.png" alt="VaVsta" />
+            <h1>VaVsta Messenger</h1>
+            <p>Приложение для Android: чаты, звонки и сквозное шифрование.</p>
+            <a id="apk_download" class="mx_DownloadButton" href="#" download hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z" /></svg>
+                Скачать APK
+            </a>
+            <p id="apk_meta"></p>
+            <p id="apk_notes"></p>
+            <p id="apk_error" hidden>
+                Не удалось получить ссылку на загрузку. Обновите страницу или откройте
+                <code>/vavsta-messenger/version.json</code>.
+            </p>
+            <div id="apk_details" hidden>
+                <p>SHA-256 файла:</p>
+                <code id="apk_sha"></code>
+            </div>
+            <a class="mx_BackLink" href="../">Пользоваться веб-версией</a>
+        </div>
+    </body>
 </html>

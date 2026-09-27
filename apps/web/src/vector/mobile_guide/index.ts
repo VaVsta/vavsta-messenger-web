@@ -5,13 +5,18 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import "./index.css";
+// Апстримный index.css не подключаем: он перебивает стили нашей разметки
+// (body/p получают светлую тему Compound и padding под градиент Element), а
+// классов вроде .mx_HomePage_* в брендированной странице уже нет. HtmlWebpackPlugin
+// подставляет <link> в конец head — после инлайнового <style>, так что своим
+// CSS страница управляет сама.
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/600.css";
 
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { getVectorConfig } from "../getconfig";
+import { setupApkDownload } from "./apk-download";
 import { MobileAppVariant, mobileApps, updateMobilePage } from "./mobile-apps.ts";
 
 function onBackToElementClick(): void {
@@ -128,9 +133,19 @@ async function initPage(): Promise<void> {
     }
 
     // Not part of updateMobilePage as the link is only shown on mobile_guide and not on mobile.element.io
-    document.getElementById("back_to_element_button")!.onclick = onBackToElementClick;
+    // В брендированной странице (VaVsta) этих элементов нет — раньше здесь был
+    // TypeError на .onclick несуществующей ссылки, и страница ломалась целиком.
+    const backButton = document.getElementById("back_to_element_button") as HTMLAnchorElement | null;
+    if (backButton) backButton.onclick = onBackToElementClick;
 
-    updateMobilePage(metadata, deepLinkUrl, serverName ?? hsUrl);
+    // Апстримный updateMobilePage безусловно дёргает ссылки на сторы Element,
+    // которых в нашей разметке нет, — вызываем только когда разметка апстримная.
+    if (document.getElementById("play_store_link")) {
+        updateMobilePage(metadata, deepLinkUrl, serverName ?? hsUrl);
+    }
 }
 
+// Кнопка «Скачать APK» не зависит от конфига и homeserver, поэтому стартует
+// сразу: манифест весит 400 байт, а initPage ждёт сеть.
+void setupApkDownload();
 void initPage();
