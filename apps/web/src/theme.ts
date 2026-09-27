@@ -94,6 +94,9 @@ export function isHighContrastTheme(theme: string): boolean {
 
 export function enumerateThemes(): { [key: string]: string } {
     const BUILTIN_THEMES = {
+        // VaVsta brand themes come first: they are the default pick in Appearance
+        "vavsta-light": "VaVsta Light",
+        "vavsta-dark": "VaVsta Dark",
         "light": _t("common|light"),
         "light-high-contrast": _t("theme|light_high_contrast"),
         "dark": _t("common|dark"),

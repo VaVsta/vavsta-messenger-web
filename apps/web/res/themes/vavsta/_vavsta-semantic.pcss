@@ -1,0 +1,42 @@
+/*
+Copyright 2026 Element Creations Ltd.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+/*
+ * Semantic token pins for the VaVsta theme.
+ *
+ * This file is imported WITHOUT a @layer, so it beats every layered rule,
+ * including cpd-semantic. That is the only way to re-point semantic tokens:
+ * they live in a layer *above* `custom`, so a layered override would lose.
+ *
+ * Everything here is deliberately minimal: only the tokens that must NOT follow
+ * the brand accent are pinned back to Compound's original green (success) plus
+ * a violet focus ring, because those are the two places where a violet accent
+ * would otherwise look like a bug rather than a brand.
+ *
+ * The values below are copied verbatim from Compound 10.2.1
+ * cpd-theme-{dark,light}-base.css, so the green is exactly Element's green.
+ */
+
+.cpd-theme-dark.cpd-theme-dark {
+    /* success stays green: the accent scale is violet now */
+    --cpd-color-text-success-primary: #129a78;
+    --cpd-color-icon-success-primary: #129a78;
+    --cpd-color-bg-success-subtle: #001f0e;
+    --cpd-color-border-success-subtle: #003d29;
+
+    /* focus ring follows the accent */
+    --cpd-color-border-focused: #9675e8;
+}
+
+.cpd-theme-light.cpd-theme-light {
+    --cpd-color-text-success-primary: #007a61;
+    --cpd-color-icon-success-primary: #007a61;
+    --cpd-color-bg-success-subtle: #f1fbf6;
+    --cpd-color-border-success-subtle: #98e1c1;
+
+    --cpd-color-border-focused: #5f2fc9;
+}

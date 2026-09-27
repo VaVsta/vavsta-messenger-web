@@ -1,0 +1,18 @@
+@layer compound-tokens, compound-web, shared-components, app-web;
+@layer cpd-semantic, custom, cpd-base;
+
+@import "../../../../res/css/_font-sizes.pcss" layer(app-web);
+@import "../../light/css/_fonts.pcss" layer(app-web);
+@import "../../light/css/_light.pcss" layer(app-web);
+@import "../../dark/css/_dark.pcss" layer(app-web);
+
+/* VaVsta brand: violet accent + violet-tinted surfaces, layered the same way
+   compound-design-tokens.css orders its own layers. */
+@import "../../vavsta/_vavsta-base.pcss" layer(custom);
+/* Unlayered on purpose: has to outrank cpd-semantic. */
+@import "../../vavsta/_vavsta-semantic.pcss";
+
+@import "../../light/css/_mods.pcss" layer(app-web);
+@import "../../../../res/css/_components.pcss" layer(app-web);
+@import url("highlight.js/styles/atom-one-dark.min.css") layer(app-web);
+@import url("github-markdown-css/github-markdown-dark.css") layer(app-web);

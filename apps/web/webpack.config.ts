@@ -62,6 +62,9 @@ const cssThemes = {
     "theme-dark": "./res/themes/dark/css/dark.pcss",
     "theme-light-custom": "./res/themes/light-custom/css/light-custom.pcss",
     "theme-dark-custom": "./res/themes/dark-custom/css/dark-custom.pcss",
+    // VaVsta brand themes (see res/themes/vavsta/_vavsta-base.pcss)
+    "theme-vavsta-light": "./res/themes/vavsta-light/css/vavsta-light.pcss",
+    "theme-vavsta-dark": "./res/themes/vavsta-dark/css/vavsta-dark.pcss",
 };
 
 // See docs/customisations.md
