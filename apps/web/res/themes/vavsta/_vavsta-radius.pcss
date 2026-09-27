@@ -1,0 +1,109 @@
+/*
+Copyright 2026 Element Creations Ltd.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+/*
+ * VaVsta corner rounding — the Material 3 pass.
+ *
+ * Why a separate layer: in Element the radii are literal `border-radius: 4px`
+ * values compiled into app-web, and Compound's own components tie their radius
+ * to the spacing scale (--cpd-space-3x etc.), which we must not touch or the
+ * whole layout shifts. So the only safe lever is a cascade layer declared
+ * *after* app-web: layer order beats specificity, so these plain rules win
+ * over both the app styles and Compound's without needing !important.
+ *
+ * Values follow Material 3 / Element X on Android:
+ *   text fields  4px  -> 12px
+ *   composer     4px  -> 16px
+ *   menus        4px  -> 16px
+ *   cards/toasts 8px  -> 16-20px
+ *   icon buttons 5px  -> 50% (M3 icon buttons are circular)
+ * Left alone on purpose: avatars and tiles (already 50%), the toggle switch
+ * (already a 24px pill) and the lightbox (fullscreen, must stay square).
+ */
+
+/* --- text fields: 4px was the main "not Android" cue --- */
+.mx_textinput,
+.mx_MatrixChat_wrapper :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) input,
+.mx_Dialog :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) input,
+.mx_AutocompleteInput_editor,
+.mx_FilterDropdown .mx_Dropdown_input,
+.mx_CreateRoomDialog_input,
+.mx_TextInputDialog_input,
+.mx_SetEmailDialog_email_input,
+.mx_InteractiveAuthEntry_components {
+    border-radius: 12px;
+}
+
+/* search boxes read as pills/fields rather than chips */
+.mx_SearchBox,
+.mx_SpaceChildrenPicker .mx_SearchBox {
+    border-radius: 16px;
+}
+
+/* --- message composer: one rounded box, 16px like Element X --- */
+.mx_WysiwygComposer_Editor_container,
+.mx_WysiwygComposer_Editor_content,
+.mx_EditWysiwygComposer .mx_WysiwygComposer_Editor_content,
+.mx_EditMessageComposer .mx_BasicMessageComposer_input,
+.mx_MessageComposer_input,
+.mx_MessageComposerFormatBar,
+.mx_ThreadPanel .mx_MessageComposer {
+    border-radius: 16px;
+}
+
+/* format bar buttons: M3 icon buttons are circular */
+.mx_MessageComposer_wysiwyg .mx_EmojiButton,
+.mx_MessageComposer_wysiwyg .mx_MessageComposer_button {
+    border-radius: 50%;
+}
+
+.mx_MessageComposer_row .mx_VoiceMessagePrimaryContainer,
+.mx_MessageComposer_input pre,
+.mx_EventTile_content .markdown-body pre,
+.mx_Markdown_CODE {
+    border-radius: 8px;
+}
+
+/* --- menus and dropdowns --- */
+.mx_Dropdown_menu,
+.mx_FilterDropdown .mx_Dropdown_menu,
+.mx_GenericDropdownMenu_button {
+    border-radius: 16px;
+}
+
+/* --- dialogs: 24px everywhere, including the ones pinned with !important --- */
+.mx_SpotlightDialog_wrapper .mx_Dialog,
+.mx_LeaveSpaceDialog_wrapper .mx_Dialog .mx_LeaveSpaceDialog,
+.mx_DialogOwnBeaconStatus {
+    border-radius: 24px;
+}
+
+.mx_Dialog_cancelButton {
+    border-radius: 20px;
+}
+
+/* --- message content: pills instead of 2px slivers --- */
+.mx_ReplyChain,
+.mx_EventTile_content .markdown-body blockquote,
+.mx_Dialog .markdown-body blockquote {
+    border-radius: 12px;
+}
+
+.mx_EventTile_content .markdown-body code:not(pre *) {
+    border-radius: 6px;
+}
+
+/* --- misc chips, cards, toasts --- */
+.mx_BeaconStatusTooltip_inner,
+.mx_DevTools_VerificationRequest,
+.mx_DeviceExpandDetailsButton,
+.mx_AppsDrawer .mx_AppsDrawer_resizer_container .mx_AppsDrawer_resizer_dots,
+.mx_TagComposer .mx_TagComposer_input .mx_AccessibleButton,
+.mx_Dialog .mx_VerificationPanel_QRPhase_startOptions .mx_VerificationPanel_QRPhase_startOption,
+.mx_KeyboardShortcut kbd {
+    border-radius: 12px;
+}

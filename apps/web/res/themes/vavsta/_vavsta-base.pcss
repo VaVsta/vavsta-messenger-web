@@ -28,116 +28,114 @@ Please see LICENSE files in the repository root for full details.
 /* Order must match compound-design-tokens.css, otherwise layer priority flips. */
 @layer cpd-semantic, custom, cpd-base;
 
-@layer custom {
-    /* ---------------------------------------------------------------------
+/* ---------------------------------------------------------------------
      * Dark VaVsta: near-black violet canvas with violet-tinted neutrals.
      * Compound dark canvas is #101317; ours is the manifest background
      * (#080314) lifted just enough to keep the room list readable.
      * ------------------------------------------------------------------ */
-    .cpd-theme-dark.cpd-theme-dark {
-        --cpd-color-theme-bg: #0a0518;
+.cpd-theme-dark.cpd-theme-dark {
+    --cpd-color-theme-bg: #0a0518;
 
-        /* gray scale, violet-tinted (mirrors Compound dark lightness steps) */
-        --cpd-color-gray-100: #120b22;
-        --cpd-color-gray-200: #170e2b;
-        --cpd-color-gray-300: #1d1234;
-        --cpd-color-gray-400: #26183f;
-        --cpd-color-gray-500: #32204f;
-        --cpd-color-gray-600: #3d285f;
-        --cpd-color-gray-700: #4b3272;
-        --cpd-color-gray-800: #6a5390;
-        --cpd-color-gray-900: #8b7aa8;
-        --cpd-color-gray-1000: #a093b8;
-        --cpd-color-gray-1100: #b7acc7;
-        --cpd-color-gray-1200: #d0c8d9;
-        --cpd-color-gray-1300: #e4dee9;
-        --cpd-color-gray-1400: #f3f0f6;
+    /* gray scale, violet-tinted (mirrors Compound dark lightness steps) */
+    --cpd-color-gray-100: #120b22;
+    --cpd-color-gray-200: #170e2b;
+    --cpd-color-gray-300: #1d1234;
+    --cpd-color-gray-400: #26183f;
+    --cpd-color-gray-500: #32204f;
+    --cpd-color-gray-600: #3d285f;
+    --cpd-color-gray-700: #4b3272;
+    --cpd-color-gray-800: #6a5390;
+    --cpd-color-gray-900: #8b7aa8;
+    --cpd-color-gray-1000: #a093b8;
+    --cpd-color-gray-1100: #b7acc7;
+    --cpd-color-gray-1200: #d0c8d9;
+    --cpd-color-gray-1300: #e4dee9;
+    --cpd-color-gray-1400: #f3f0f6;
 
-        /* accent: the brand violet, replacing Compound's green */
-        --cpd-color-green-100: #140b24;
-        --cpd-color-green-200: #1a0f2e;
-        --cpd-color-green-300: #221439;
-        --cpd-color-green-400: #2c1a47;
-        --cpd-color-green-500: #3a2360;
-        --cpd-color-green-600: #4a2e7c;
-        --cpd-color-green-700: #5b3a9e;
-        --cpd-color-green-800: #7a56c9;
-        --cpd-color-green-900: #9675e8;
-        --cpd-color-green-1000: #a98ef0;
-        --cpd-color-green-1100: #bca7f4;
-        --cpd-color-green-1200: #d0c0f8;
-        --cpd-color-green-1300: #e3d8fb;
-        --cpd-color-green-1400: #f1ebfd;
+    /* accent: the brand violet, replacing Compound's green */
+    --cpd-color-green-100: #140b24;
+    --cpd-color-green-200: #1a0f2e;
+    --cpd-color-green-300: #221439;
+    --cpd-color-green-400: #2c1a47;
+    --cpd-color-green-500: #3a2360;
+    --cpd-color-green-600: #4a2e7c;
+    --cpd-color-green-700: #5b3a9e;
+    --cpd-color-green-800: #7a56c9;
+    --cpd-color-green-900: #9675e8;
+    --cpd-color-green-1000: #a98ef0;
+    --cpd-color-green-1100: #bca7f4;
+    --cpd-color-green-1200: #d0c0f8;
+    --cpd-color-green-1300: #e3d8fb;
+    --cpd-color-green-1400: #f1ebfd;
 
-        /* violet alphas (names stay "green": the app references them by name) */
-        --cpd-color-alpha-green-100: hsla(258, 62%, 5%, 1);
-        --cpd-color-alpha-green-200: hsla(258, 62%, 7%, 1);
-        --cpd-color-alpha-green-300: hsla(258, 60%, 9%, 1);
-        --cpd-color-alpha-green-400: hsla(258, 58%, 12%, 1);
-        --cpd-color-alpha-green-500: hsla(258, 56%, 16%, 1);
-        --cpd-color-alpha-green-600: hsla(258, 54%, 21%, 1);
-        --cpd-color-alpha-green-700: hsla(258, 52%, 28%, 1);
-        --cpd-color-alpha-green-800: hsl(258, 55%, 40%, 1);
-        --cpd-color-alpha-green-900: hsla(255, 72%, 66%, 0.6);
-        --cpd-color-alpha-green-1000: hsla(254, 76%, 72%, 0.68);
-        --cpd-color-alpha-green-1100: hsla(253, 80%, 79%, 0.76);
-        --cpd-color-alpha-green-1200: hsla(252, 84%, 86%, 0.84);
-        --cpd-color-alpha-green-1300: hsla(251, 88%, 92%, 0.92);
-        --cpd-color-alpha-green-1400: hsla(250, 92%, 96%, 0.96);
-    }
+    /* violet alphas (names stay "green": the app references them by name) */
+    --cpd-color-alpha-green-100: hsla(258, 62%, 5%, 1);
+    --cpd-color-alpha-green-200: hsla(258, 62%, 7%, 1);
+    --cpd-color-alpha-green-300: hsla(258, 60%, 9%, 1);
+    --cpd-color-alpha-green-400: hsla(258, 58%, 12%, 1);
+    --cpd-color-alpha-green-500: hsla(258, 56%, 16%, 1);
+    --cpd-color-alpha-green-600: hsla(258, 54%, 21%, 1);
+    --cpd-color-alpha-green-700: hsla(258, 52%, 28%, 1);
+    --cpd-color-alpha-green-800: hsl(258, 55%, 40%, 1);
+    --cpd-color-alpha-green-900: hsla(255, 72%, 66%, 0.6);
+    --cpd-color-alpha-green-1000: hsla(254, 76%, 72%, 0.68);
+    --cpd-color-alpha-green-1100: hsla(253, 80%, 79%, 0.76);
+    --cpd-color-alpha-green-1200: hsla(252, 84%, 86%, 0.84);
+    --cpd-color-alpha-green-1300: hsla(251, 88%, 92%, 0.92);
+    --cpd-color-alpha-green-1400: hsla(250, 92%, 96%, 0.96);
+}
 
-    /* ---------------------------------------------------------------------
+/* ---------------------------------------------------------------------
      * Light VaVsta: white canvas, violet-tinted greys for surfaces.
      * ------------------------------------------------------------------ */
-    .cpd-theme-light.cpd-theme-light {
-        --cpd-color-theme-bg: #fefdff;
+.cpd-theme-light.cpd-theme-light {
+    --cpd-color-theme-bg: #fefdff;
 
-        /* gray scale, violet-tinted (mirrors Compound light lightness steps) */
-        --cpd-color-gray-100: #fcfbff;
-        --cpd-color-gray-200: #f7f5fd;
-        --cpd-color-gray-300: #f0edf9;
-        --cpd-color-gray-400: #e4e0f2;
-        --cpd-color-gray-500: #d2cde6;
-        --cpd-color-gray-600: #beb8d6;
-        --cpd-color-gray-700: #a69fc2;
-        --cpd-color-gray-800: #857da3;
-        --cpd-color-gray-900: #6a6384;
-        --cpd-color-gray-1000: #5e5776;
-        --cpd-color-gray-1100: #514a68;
-        --cpd-color-gray-1200: #403a52;
-        --cpd-color-gray-1300: #2e2a3b;
-        --cpd-color-gray-1400: #1e1a28;
+    /* gray scale, violet-tinted (mirrors Compound light lightness steps) */
+    --cpd-color-gray-100: #fcfbff;
+    --cpd-color-gray-200: #f7f5fd;
+    --cpd-color-gray-300: #f0edf9;
+    --cpd-color-gray-400: #e4e0f2;
+    --cpd-color-gray-500: #d2cde6;
+    --cpd-color-gray-600: #beb8d6;
+    --cpd-color-gray-700: #a69fc2;
+    --cpd-color-gray-800: #857da3;
+    --cpd-color-gray-900: #6a6384;
+    --cpd-color-gray-1000: #5e5776;
+    --cpd-color-gray-1100: #514a68;
+    --cpd-color-gray-1200: #403a52;
+    --cpd-color-gray-1300: #2e2a3b;
+    --cpd-color-gray-1400: #1e1a28;
 
-        /* accent: brand violet, dark enough to sit on white */
-        --cpd-color-green-100: #f7f4ff;
-        --cpd-color-green-200: #f0ebfe;
-        --cpd-color-green-300: #e4dcfd;
-        --cpd-color-green-400: #d2c6fb;
-        --cpd-color-green-500: #bca7f8;
-        --cpd-color-green-600: #a487f2;
-        --cpd-color-green-700: #8b68e8;
-        --cpd-color-green-800: #7449de;
-        --cpd-color-green-900: #5f2fc9;
-        --cpd-color-green-1000: #4f26a8;
-        --cpd-color-green-1100: #3f1d87;
-        --cpd-color-green-1200: #31166b;
-        --cpd-color-green-1300: #230f4d;
-        --cpd-color-green-1400: #15062c;
+    /* accent: brand violet, dark enough to sit on white */
+    --cpd-color-green-100: #f7f4ff;
+    --cpd-color-green-200: #f0ebfe;
+    --cpd-color-green-300: #e4dcfd;
+    --cpd-color-green-400: #d2c6fb;
+    --cpd-color-green-500: #bca7f8;
+    --cpd-color-green-600: #a487f2;
+    --cpd-color-green-700: #8b68e8;
+    --cpd-color-green-800: #7449de;
+    --cpd-color-green-900: #5f2fc9;
+    --cpd-color-green-1000: #4f26a8;
+    --cpd-color-green-1100: #3f1d87;
+    --cpd-color-green-1200: #31166b;
+    --cpd-color-green-1300: #230f4d;
+    --cpd-color-green-1400: #15062c;
 
-        /* violet alphas */
-        --cpd-color-alpha-green-100: hsla(258, 80%, 45%, 0.03);
-        --cpd-color-alpha-green-200: hsla(258, 80%, 45%, 0.06);
-        --cpd-color-alpha-green-300: hsla(258, 78%, 45%, 0.11);
-        --cpd-color-alpha-green-400: hsla(258, 76%, 45%, 0.23);
-        --cpd-color-alpha-green-500: hsla(258, 74%, 45%, 0.41);
-        --cpd-color-alpha-green-600: hsla(258, 72%, 45%, 0.56);
-        --cpd-color-alpha-green-700: hsla(258, 70%, 40%, 0.96);
-        --cpd-color-alpha-green-800: hsl(258, 70%, 35%, 1);
-        --cpd-color-alpha-green-900: hsl(258, 68%, 30%, 1);
-        --cpd-color-alpha-green-1000: hsl(258, 66%, 26%, 1);
-        --cpd-color-alpha-green-1100: hsl(258, 64%, 21%, 1);
-        --cpd-color-alpha-green-1200: hsl(258, 62%, 16%, 1);
-        --cpd-color-alpha-green-1300: hsl(258, 60%, 11%, 1);
-        --cpd-color-alpha-green-1400: hsl(258, 58%, 7%, 1);
-    }
+    /* violet alphas */
+    --cpd-color-alpha-green-100: hsla(258, 80%, 45%, 0.03);
+    --cpd-color-alpha-green-200: hsla(258, 80%, 45%, 0.06);
+    --cpd-color-alpha-green-300: hsla(258, 78%, 45%, 0.11);
+    --cpd-color-alpha-green-400: hsla(258, 76%, 45%, 0.23);
+    --cpd-color-alpha-green-500: hsla(258, 74%, 45%, 0.41);
+    --cpd-color-alpha-green-600: hsla(258, 72%, 45%, 0.56);
+    --cpd-color-alpha-green-700: hsla(258, 70%, 40%, 0.96);
+    --cpd-color-alpha-green-800: hsl(258, 70%, 35%, 1);
+    --cpd-color-alpha-green-900: hsl(258, 68%, 30%, 1);
+    --cpd-color-alpha-green-1000: hsl(258, 66%, 26%, 1);
+    --cpd-color-alpha-green-1100: hsl(258, 64%, 21%, 1);
+    --cpd-color-alpha-green-1200: hsl(258, 62%, 16%, 1);
+    --cpd-color-alpha-green-1300: hsl(258, 60%, 11%, 1);
+    --cpd-color-alpha-green-1400: hsl(258, 58%, 7%, 1);
 }
