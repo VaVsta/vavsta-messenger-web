@@ -98,6 +98,11 @@ Please see LICENSE files in the repository root for full details.
     border-radius: 16px;
 }
 
+/* --- landing page CTAs: 8px on a 160x132 tile reads as a hard square --- */
+.mx_HomePage_default_buttons .mx_AccessibleButton {
+    border-radius: 20px;
+}
+
 /* --- dialogs: 24px on the shared surface, which ~40 dialogs use ---
  * .mx_Dialog itself declared no radius at all in app-web, so every dialog
  * that isn't listed individually below rendered perfectly square. */
