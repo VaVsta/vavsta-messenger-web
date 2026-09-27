@@ -20,10 +20,29 @@ Please see LICENSE files in the repository root for full details.
  *   composer     4px  -> 16px
  *   menus        4px  -> 16px
  *   cards/toasts 8px  -> 16-20px
+ *   dialogs      0px  -> 24px
  *   icon buttons 5px  -> 50% (M3 icon buttons are circular)
  * Left alone on purpose: avatars and tiles (already 50%), the toggle switch
- * (already a 24px pill) and the lightbox (fullscreen, must stay square).
+ * (already a 24px pill) and the lightbox (fullscreen, must stay square — it
+ * needs an explicit opt-out here, see below).
+ *
+ * Two things to know before adding rules to this file:
+ *   1. A plain rule here beats any plain rule in app-web / shared-components /
+ *      compound-web regardless of specificity, because layer order wins. That is
+ *      the whole reason this file exists.
+ *   2. Layer order does NOT beat `!important` from an earlier layer. The
+ *      Spotlight dialog pins 8px !important, so that one rule has to carry
+ *      !important too. Same trap for _QuickSettingsButton (8px !important),
+ *      _ThreadsActivityCentre (8px !important) and _WidgetAvatar (4px
+ *      !important) — the last one cannot be rounded from this file at all.
  */
+
+:root {
+    /* app-web sets this to 8px and reads it in eight places: image/media/reply
+       bodies, beacons, location — including two modules in shared-components,
+       which inherit the variable from :root. One override moves all of them. */
+    --MBody-border-radius: 16px;
+}
 
 /* --- text fields: 4px was the main "not Android" cue --- */
 .mx_textinput,
@@ -49,15 +68,19 @@ Please see LICENSE files in the repository root for full details.
 .mx_WysiwygComposer_Editor_content,
 .mx_EditWysiwygComposer .mx_WysiwygComposer_Editor_content,
 .mx_EditMessageComposer .mx_BasicMessageComposer_input,
-.mx_MessageComposer_input,
 .mx_MessageComposerFormatBar,
 .mx_ThreadPanel .mx_MessageComposer {
     border-radius: 16px;
 }
 
-/* format bar buttons: M3 icon buttons are circular */
+/* format bar buttons: M3 icon buttons are circular.
+   The two classes below are the ones the composer actually renders — the old
+   layer only covered mx_MessageComposer_button and never these. */
 .mx_MessageComposer_wysiwyg .mx_EmojiButton,
-.mx_MessageComposer_wysiwyg .mx_MessageComposer_button {
+.mx_MessageComposer_wysiwyg .mx_MessageComposer_button,
+.mx_FormattingButtons_Button,
+.mx_SpaceCreateMenu_back,
+.mx_ZoomButtons .mx_ZoomButtons_button {
     border-radius: 50%;
 }
 
@@ -75,8 +98,26 @@ Please see LICENSE files in the repository root for full details.
     border-radius: 16px;
 }
 
-/* --- dialogs: 24px everywhere, including the ones pinned with !important --- */
-.mx_SpotlightDialog_wrapper .mx_Dialog,
+/* --- dialogs: 24px on the shared surface, which ~40 dialogs use ---
+ * .mx_Dialog itself declared no radius at all in app-web, so every dialog
+ * that isn't listed individually below rendered perfectly square. */
+.mx_Dialog {
+    border-radius: 24px;
+}
+
+/* app-web pins the Spotlight dialog to 8px !important, and layer order does
+   NOT beat !important from an earlier layer — matching it is the only way in. */
+.mx_SpotlightDialog_wrapper .mx_Dialog {
+    border-radius: 24px !important;
+}
+
+/* The lightbox is a fullscreen overlay, not a dialog: it must stay square.
+   Without this the new .mx_Dialog rule would round it too, since our layer
+   wins on order where app-web only wins on specificity. */
+.mx_Dialog_lightbox .mx_Dialog {
+    border-radius: 0;
+}
+
 .mx_LeaveSpaceDialog_wrapper .mx_Dialog .mx_LeaveSpaceDialog,
 .mx_DialogOwnBeaconStatus {
     border-radius: 24px;
@@ -99,7 +140,6 @@ Please see LICENSE files in the repository root for full details.
 
 /* --- misc chips, cards, toasts --- */
 .mx_BeaconStatusTooltip_inner,
-.mx_DevTools_VerificationRequest,
 .mx_DeviceExpandDetailsButton,
 .mx_AppsDrawer .mx_AppsDrawer_resizer_container .mx_AppsDrawer_resizer_container_handle,
 .mx_TagComposer .mx_TagComposer_input .mx_AccessibleButton,
