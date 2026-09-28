@@ -664,6 +664,14 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 chunks: ["mobileguide"],
             }),
 
+            // Migration guide
+            new HtmlWebpackPlugin({
+                template: "./src/vector/mobile_guide/migration.html",
+                filename: "mobile_guide/migration.html",
+                minify: false,
+                chunks: [],
+            }),
+
             // These are the static error pages for when the javascript env is *really unsupported*
             new HtmlWebpackPlugin({
                 template: "./src/vector/static/unable-to-load.html",
