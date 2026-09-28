@@ -106,7 +106,10 @@ echo "==> Версия в apps/web/package.json: $VERSION"
 echo "==> Сборка (production)"
 build_started="$(date +%s)"
 rm -rf "$WEBAPP/bundles"
-pnpm --filter element-web build
+# --skip-nx-cache обязателен: nx считает хеш задачи по исходникам, а смена версии
+# в package.json в него не входит. Без флага build молча отдаёт прошлый артефакт
+# из кэша, и webapp/version остаётся старым — релиз уехал бы с чужой версией.
+pnpm --filter element-web build --skip-nx-cache
 
 # --- 3. Проверки локально ----------------------------------------------------
 [[ -f "$WEBAPP/version" ]] || { echo "!! нет $WEBAPP/version" >&2; exit 1; }
