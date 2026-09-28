@@ -218,7 +218,24 @@ describe("WebPlatform", () => {
                 const result = await platform.pollForUpdate(showUpdate, showNoUpdate);
 
                 expect(result).toEqual({ status: UpdateCheckStatus.Ready });
-                expect(showUpdate).toHaveBeenCalledWith("0.0.0", prodVersion);
+                // changelog.json в тесте не отдан — releaseNotes приходит undefined
+                expect(showUpdate).toHaveBeenCalledWith("0.0.0", prodVersion, undefined);
+                expect(showNoUpdate).not.toHaveBeenCalled();
+            });
+
+            it("should pass release notes from changelog.json to showUpdate", async () => {
+                // @ts-ignore
+                WebPlatform.VERSION = "0.0.0"; // old version
+                fetchMock.getOnce("end:/version", prodVersion);
+                fetchMock.getOnce("end:/changelog.json", { version: prodVersion, notes: "Тестовый релиз" });
+                const platform = new WebPlatform();
+
+                const showUpdate = vi.fn();
+                const showNoUpdate = vi.fn();
+                const result = await platform.pollForUpdate(showUpdate, showNoUpdate);
+
+                expect(result).toEqual({ status: UpdateCheckStatus.Ready });
+                expect(showUpdate).toHaveBeenCalledWith("0.0.0", prodVersion, "Тестовый релиз");
                 expect(showNoUpdate).not.toHaveBeenCalled();
             });
 

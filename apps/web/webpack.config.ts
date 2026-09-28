@@ -717,6 +717,8 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     { from: "decoder-ring/**", context: path.resolve(__dirname, "res") },
                     { from: "media/**", context: path.resolve(__dirname, "res/") },
                     { from: "config.json", noErrorOnMissing: true },
+                    // Форк VaVsta: релизные заметки для тоста обновления
+                    { from: "changelog.json", noErrorOnMissing: true },
                     // Element Call embedded widget
                     {
                         from: "**",

@@ -145,6 +145,22 @@ export default class WebPlatform extends BasePlatform {
         });
     }
 
+    // Форк VaVsta: необязательный changelog.json рядом с version. Нужен, потому что
+    // ChangelogDialog апстрима умеет только git-compare (riot.im) и для релизов
+    // с версией вида 1.12.27 вообще не показывается.
+    private async getReleaseNotes(): Promise<string | undefined> {
+        try {
+            const res = await fetch("changelog.json", { cache: "no-cache" });
+            if (!res.ok) return undefined;
+            const data = await res.json();
+            const notes = data?.notes;
+            return typeof notes === "string" && notes.trim() ? notes.trim() : undefined;
+        } catch (e) {
+            logger.warn("Failed to fetch changelog.json", e);
+            return undefined;
+        }
+    }
+
     private async getMostRecentVersion(): Promise<string> {
         const res = await fetch("version", {
             method: "GET",
@@ -173,13 +189,13 @@ export default class WebPlatform extends BasePlatform {
         // Ideally, loading an old copy would be impossible with the
         // cache-control: nocache HTTP header set, but Firefox doesn't always obey it :/
         console.log("startUpdater, current version is " + getNormalizedAppVersion(WebPlatform.VERSION));
-        void this.pollForUpdate((version: string, newVersion: string) => {
+        void this.pollForUpdate((version: string, newVersion: string, releaseNotes?: string) => {
             const url = new URL(window.location.href);
             if (url.searchParams.has("updated")) {
                 console.log("Update reloaded but still on an old version, stopping");
                 // We just reloaded already and are still on the old version!
                 // Show the toast rather than reload in a loop.
-                showUpdateToast(version, newVersion);
+                showUpdateToast(version, newVersion, releaseNotes);
                 return;
             }
 
@@ -197,17 +213,18 @@ export default class WebPlatform extends BasePlatform {
 
     // Exported for tests
     public pollForUpdate = (
-        showUpdate: (currentVersion: string, mostRecentVersion: string) => void,
+        showUpdate: (currentVersion: string, mostRecentVersion: string, releaseNotes?: string) => void,
         showNoUpdate?: () => void,
     ): Promise<UpdateStatus> => {
         return this.getMostRecentVersion().then(
-            (mostRecentVersion) => {
+            async (mostRecentVersion) => {
                 const currentVersion = getNormalizedAppVersion(WebPlatform.VERSION);
 
                 if (currentVersion !== mostRecentVersion) {
                     if (this.shouldShowUpdate(mostRecentVersion)) {
+                        const releaseNotes = await this.getReleaseNotes();
                         console.log("Update available to " + mostRecentVersion + ", will notify user");
-                        showUpdate(currentVersion, mostRecentVersion);
+                        showUpdate(currentVersion, mostRecentVersion, releaseNotes);
                     } else {
                         console.log("Update available to " + mostRecentVersion + " but won't be shown");
                     }
