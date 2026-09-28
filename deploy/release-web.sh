@@ -13,7 +13,7 @@
 #   ./deploy/release-web.sh --bump patch # поднять версию (patch/minor/major) перед сборкой
 #   ./deploy/release-web.sh --deploy --bump patch
 #
-# SSH: ключ ~/.ssh/id_ed25519 под паролем «Lala101201», поэтому нужен ssh-agent.
+# SSH: ключ под паролем, поэтому нужен ssh-agent.
 # Скрипт НЕ подставляет пароль и не спросит его — если agent не запущен, сначала
 # подними его (см. AGENTS/память) либо правь SSH= в этом файле под свой способ.
 #
