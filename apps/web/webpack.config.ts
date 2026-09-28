@@ -718,7 +718,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     { from: "media/**", context: path.resolve(__dirname, "res/") },
                     { from: "config.json", noErrorOnMissing: true },
                     // Форк VaVsta: релизные заметки для тоста обновления
-                    { from: "changelog.json", noErrorOnMissing: true },
+                    { from: "changelog.json", context: path.resolve(__dirname, "res"), noErrorOnMissing: true },
                     // Element Call embedded widget
                     {
                         from: "**",
