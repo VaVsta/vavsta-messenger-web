@@ -3,12 +3,11 @@ on:
     pull_request: {}
     push:
         branches: [develop, master]
-    merge_group:
-        types: [checks_requested]
 concurrency:
     group: ${{ github.workflow }}-${{ github.head_ref || github.sha }}
     cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-# develop pushes and repository_dispatch handled in build_develop.yaml
+# Собираем только под Linux: веб-часть кроссплатформенная, а windows-2022/macos-14
+# в матрице были нужны ради десктоп-приложения (сборка desktop удалена из репа).
 env:
     # This must be set for fetchdep.sh to get the right branch
     PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -16,29 +15,8 @@ env:
 permissions: {} # No permissions required
 jobs:
     build:
-        name: "Build on ${{ matrix.image }}"
-        # We build on all 3 platforms to ensure we don't have any OS-specific build incompatibilities
-        strategy:
-            fail-fast: false
-            matrix:
-                image:
-                    - ubuntu-24.04
-                    - windows-2022
-                    - macos-14
-                isDevelop:
-                    - ${{ github.event_name == 'push' && github.ref_name == 'develop' }}
-                isPullRequest:
-                    - ${{ github.event_name == 'pull_request' }}
-                # Skip the ubuntu-24.04 build for the develop branch as the dedicated CD build_develop workflow handles that
-                # Skip the non-linux builds for pull requests as Windows is awfully slow, so run in merge queue only
-                exclude:
-                    - isDevelop: true
-                      image: ubuntu-24.04
-                    - isPullRequest: true
-                      image: windows-2022
-                    - isPullRequest: true
-                      image: macos-14
-        runs-on: ${{ matrix.image }}
+        name: Build on ubuntu-24.04
+        runs-on: ubuntu-24.04
         defaults:
             run:
                 shell: bash
